@@ -4,7 +4,7 @@ from pprint import pprint
 
 tagRegistry = {}
 replacementMap = {}
-validHtmlTags = ["div", "i", "img", "h1", "h2", "h3", "h4", "h5", "h6", "head", "body", "span", "button"]
+validHtmlTags = ["nav", "div", "i", "img", "h1", "h2", "h3", "h4", "h5", "h6", "head", "body", "span", "button"]
 
 htmlHandle = open(argv[1], "r")
 
@@ -84,14 +84,6 @@ for prefix, target in toReplace:
 	#for file in cssFiles.keys():
 	#	cssFiles[file] = cssFiles[file].replace(target, replaced)
 
-for file in cssFiles.keys():
-	names = re.split("/", file)
-	torep = names[-1].replace(".", "1.")
-	modifiedName = file.replace(names[-1], torep)
-	htmlOut = htmlOut.replace(file, modifiedName)
-	fileHandle = open(modifiedName, "w")
-	fileHandle.write(cssFiles[file])
-	fileHandle.close()
 
 
 
@@ -105,8 +97,19 @@ repMap = {}
 for key in keys:
 	repMap[key] = replacementMap[key]
 
-for target in repMap:
-	htmlOut = htmlOut.replace(target, repMap[target])
+for target in repMap.keys():
+	htmlOut = re.sub(r"\b" + target + r"\b", repMap[target], htmlOut)
+	for file in cssFiles.keys():
+		cssFiles[file] = re.sub(r"\b" + target + r"\b", repMap[target], cssFiles[file])
+
+for file in cssFiles.keys():
+	names = re.split("/", file)
+	torep = names[-1].replace(".", "1.")
+	modifiedName = file.replace(names[-1], torep)
+	htmlOut = htmlOut.replace(file, modifiedName)
+	fileHandle = open(modifiedName, "w")
+	fileHandle.write(cssFiles[file])
+	fileHandle.close()
 
 modHtmlName = argv[1].replace(".", "1.")
 htmlHandle = open(modHtmlName, "w")
