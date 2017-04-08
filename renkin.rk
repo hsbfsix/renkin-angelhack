@@ -1,0 +1,68 @@
+-- Examples of Renkin, a webpage definition language. --
+
+-- Also provides a compiler to convert to HTML/CSS --
+-- AIMS TO REPLACE HTML MUHAHAHAHA --
+
+class Document
+{
+	def title : null
+	def tag : html
+}
+
+class Element
+{
+	def left : 0
+	def top : 0
+	def width : 0
+	def height : 0
+	tag : div
+}
+
+class Visible : Element
+{
+	background-color: red
+}
+
+class Button : Visible
+{
+	
+}
+
+class Image : Visible
+{
+	
+}
+
+class TextBox : Visible
+{
+	
+}
+
+Document doc
+{
+	Button aButton
+	{
+		left : 10
+		top : 10
+		width : 100
+		height : 200
+		background-color : orange
+	}
+	Button bButton
+	{
+		left : 110
+		top : 210
+		width : 100
+		height : 200
+		background-color : white
+	}
+	Button cButton
+	{
+		left : 210
+		top : 410
+		width : 100
+		height : 200
+		background-color : green
+	}
+
+}
